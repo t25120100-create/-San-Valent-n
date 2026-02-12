@@ -3,63 +3,124 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Para Ti 💖</title>
+<title>Para Ti ❤️</title>
 
 <style>
 body {
-    background: #ff5f7e;
+    margin: 0;
+    padding: 0;
+    background: linear-gradient(45deg, #ff4e8a, #ff9ec6);
     text-align: center;
     font-family: Arial, sans-serif;
     color: white;
+    overflow: hidden;
+}
+
+h1 {
+    margin-top: 40px;
+    font-size: 42px;
+    animation: aparecer 2s ease-in-out;
 }
 
 img {
-    width: 250px;
+    width: 260px;
     border-radius: 20px;
     margin: 20px;
-    box-shadow: 0 0 20px white;
+    box-shadow: 0 0 25px white;
+    animation: flotar 3s ease-in-out infinite;
 }
 
 button {
-    padding: 15px 30px;
+    padding: 15px 35px;
     font-size: 18px;
-    border-radius: 30px;
+    background: white;
+    color: #ff4e8a;
     border: none;
+    border-radius: 30px;
     cursor: pointer;
+    transition: 0.3s;
+    animation: aparecer 3s ease-in-out;
 }
 
-#gameArea {
+button:hover {
+    transform: scale(1.1);
+    background: pink;
+}
+
+#mensaje {
+    display: none;
+    font-size: 24px;
     margin-top: 20px;
+    animation: aparecer 2s ease-in-out;
+}
+
+.corazon {
+    position: absolute;
+    color: white;
+    font-size: 20px;
+    animation: subir 5s linear infinite;
+}
+
+/* Animaciones */
+
+@keyframes flotar {
+    0% { transform: translateY(0px); }
+    50% { transform: translateY(-15px); }
+    100% { transform: translateY(0px); }
+}
+
+@keyframes subir {
+    0% {
+        bottom: -20px;
+        opacity: 1;
+    }
+    100% {
+        bottom: 100%;
+        opacity: 0;
+    }
+}
+
+@keyframes aparecer {
+    from { opacity: 0; }
+    to { opacity: 1; }
 }
 </style>
 </head>
 
 <body>
 
-<h1>💖 Para ti, mi amor 💖</h1>
+<h1>Feliz San Valentín ❤️</h1>
 
-<img src="juntos.jpg" alt="Nuestra foto">
+<img src="juntos.jpeg" alt="Nuestra foto">
 
-<h2>Atrapa 5 corazones para desbloquear la sorpresa 💘</h2>
+<br>
 
-<button onclick="iniciarJuego()">Empezar 💕</button>
+<button onclick="mostrarSorpresa()">Haz clic aquí ❤️</button>
 
-<div id="gameArea"></div>
+<p id="mensaje">Eres lo mejor que me ha pasado 💕 Te amo muchísimo 💖</p>
 
 <audio id="musica" src="te-amo-y-mas.mp3"></audio>
 
 <script>
-function iniciarJuego() {
+function mostrarSorpresa() {
+    document.getElementById("mensaje").style.display = "block";
     document.getElementById("musica").play();
-    alert("¡Atrapa los corazones! 💖");
+
+    for (let i = 0; i < 20; i++) {
+        let corazon = document.createElement("div");
+        corazon.className = "corazon";
+        corazon.innerHTML = "❤️";
+        corazon.style.left = Math.random() * 100 + "vw";
+        corazon.style.fontSize = (Math.random() * 20 + 10) + "px";
+        corazon.style.animationDuration = (Math.random() * 3 + 2) + "s";
+        document.body.appendChild(corazon);
+
+        setTimeout(() => {
+            corazon.remove();
+        }, 5000);
+    }
 }
 </script>
 
 </body>
 </html>
-
-
-
-
-
-
