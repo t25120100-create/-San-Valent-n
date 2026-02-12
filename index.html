@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Para Ti Mi Amor 💖</title>
+
+<style>
+body{
+    margin:0;
+    padding:0;
+    font-family: Arial, sans-serif;
+    text-align:center;
+    background: linear-gradient(to bottom right, #ff4d6d, #ff8fab);
+    overflow:hidden;
+    color:white;
+}
+
+h1{
+    margin-top:30px;
+    text-shadow:2px 2px 10px #000;
+}
+
+#foto{
+    width:250px;
+    height:250px;
+    border-radius:20px;
+    object-fit:cover;
+    border:5px solid white;
+    box-shadow:0 0 25px pink;
+    margin-top:20px;
+}
+
+button{
+    padding:12px 25px;
+    font-size:18px;
+    border:none;
+    border-radius:25px;
+    cursor:pointer;
+    margin:10px;
+    transition:0.3s;
+}
+
+#startBtn{
+    background:white;
+    color:#ff4d6d;
+}
+
+#gameArea{
+    position:relative;
+    width:100%;
+    height:300px;
+    margin-top:20px;
+}
+
+/* 🌹 Pétalos */
+.petalo{
+    position:absolute;
+    top:-50px;
+    font-size:25px;
+    animation: caer linear infinite;
+    pointer-events:none;
+}
+
+@keyframes caer{
+    0%{ transform: translateY(-50px) rotate(0deg); }
+    100%{ transform: translateY(110vh) rotate(360deg); }
+}
+
+/* 💖 Corazones */
+.heart{
+    position:absolute;
+    font-size:35px;
+    cursor:pointer;
+    animation: float 4s linear infinite;
+}
+
+@keyframes float{
+    0%{transform:translateY(300px);}
+    100%{transform:translateY(-60px);}
+}
+
+/* 🎇 Fuegos artificiales */
+.firework{
+    position:absolute;
+    font-size:30px;
+    animation: explode 1s ease-out forwards;
+}
+
+@keyframes explode{
+    0%{ transform: scale(0.5); opacity:1; }
+    100%{ transform: scale(2); opacity:0; }
+}
+</style>
+</head>
+
+<body>
+
+<h1>💖 Para Ti, Mi Amor 💖</h1>
+
+<img id="foto" src="juntos.jpg">
+
+<h2>Atrapa 5 corazones para desbloquear la sorpresa 💘</h2>
+
+<button id="startBtn" onclick="iniciarJuego()">Empezar 💕</button>
+
+<div id="gameArea"></div>
+
+<audio id="musica" src="te-amo-y-mas.mp3"></audio>
+
+<script>
+
+let puntos = 0;
+let juegoActivo = false;
+
+function iniciarJuego(){
+    document.getElementById("musica").play();
+    juegoActivo = true;
+    generarCorazon();
+}
+
+function generarCorazon(){
+    if(!juegoActivo) return;
+
+    const heart = document.createElement("div");
+    heart.classList.add("heart");
+    heart.innerHTML = "💖";
+    heart.style.left = Math.random()*90 + "%";
+
+    heart.onclick = function(){
+        puntos++;
+        heart.remove();
+        if(puntos >= 5){
+            terminarJuego();
+        }
+    }
+
+    document.getElementById("gameArea").appendChild(heart);
+
+    setTimeout(()=>{ heart.remove(); },4000);
+    setTimeout(generarCorazon,800);
+}
+
+function terminarJuego(){
+    juegoActivo = false;
+    document.body.innerHTML = `
+    <h1 style="margin-top:150px;">
+    💕 Mi vida... 💕<br><br>
+    ¿Quieres ser mi San Valentín? 💖
+    </h1>
+    <button onclick="respuestaSi()" style="background:white;color:#ff4d6d;font-size:20px;">¡Sí! 💘</button>
+    <button onmouseover="mover(this)" style="position:absolute;font-size:18px;">No 😢</button>
+    `;
+}
+
+function respuestaSi(){
+    document.body.innerHTML = `
+    <h1 style="margin-top:200px;font-size:3em;">
+    💍 ¡TE AMO Y MÁS! 💖<br>
+    Gracias por existir ✨
+    </h1>
+    `;
+    lanzarFuegos();
+}
+
+function mover(btn){
+    btn.style.left = Math.random()*90 + "%";
+    btn.style.top = Math.random()*90 + "%";
+}
+
+/* 🌹 Pétalos */
+function crearPetalo(){
+    const petalo = document.createElement("div");
+    petalo.classList.add("petalo");
+    petalo.innerHTML = "🌹";
+    petalo.style.left = Math.random()*100 + "vw";
+    petalo.style.animationDuration = (Math.random()*3 + 3) + "s";
+    document.body.appendChild(petalo);
+    setTimeout(()=>{ petalo.remove(); },6000);
+}
+setInterval(crearPetalo,300);
+
+/* 🎇 Fuegos artificiales */
+function lanzarFuegos(){
+    setInterval(()=>{
+        const fuego = document.createElement("div");
+        fuego.classList.add("firework");
+        fuego.innerHTML = "🎇";
+        fuego.style.left = Math.random()*100 + "vw";
+        fuego.style.top = Math.random()*100 + "vh";
+        document.body.appendChild(fuego);
+        setTimeout(()=>{ fuego.remove(); },1000);
+    },300);
+}
+
+</script>
+
+</body>
+</html>
